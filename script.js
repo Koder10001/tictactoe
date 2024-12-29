@@ -52,17 +52,9 @@ function calc(){
         firstTwoStep();
         return;
     }
-
-    // if(turnNo == 4){
-
-    //     if(table[0][2] == table[2][0] && table[0][2] != 0|| table[0][0] == table[2][2] && table[0][0] != 0){
-    //         makeMove(0,1);
-    //         return;
-    //     }
-
-    // }
-
-    if(turnNo >= 9){
+    
+    if(turnNo > 9){
+        console.log(turnNo);
         stat.innerText = "Draw";
         return;
     }
@@ -81,8 +73,8 @@ function calc(){
                 let horizontalPoint = 0;
                 let verticalPoint = 0;
                 let backSlashPoint = 0;
-                let forwardSlashPoint
-                let negativePoint = 0;
+                let forwardSlashPoint = 0;
+                // let negativePoint = 0;
 
                 for(let num = 0; num < 3; num++){ // work on vertical and horizontal
 
@@ -110,7 +102,7 @@ function calc(){
                     
                     if (i == j ){ // [1][1] if this is the one in the center add value from the right slash too
 
-                        forwardSlashPoint += table[0][0] + table[2][2] + table[1][1];
+                        forwardSlashPoint += table[0][0] + table[1][1] + table[2][2];
 
                     }
                 }
@@ -122,12 +114,12 @@ function calc(){
 
                 // count negatives for priorities
 
-                if(verticalPoint < 0)
-                    ++negativePoint;
-                if(horizontalPoint < 0)
-                    ++negativePoint;
-                if(verticalPoint < 0)
-                    ++negativePoint;
+                // if(verticalPoint < 0)
+                //     ++negativePoint;
+                // if(horizontalPoint < 0)
+                //     ++negativePoint;
+                // if(verticalPoint < 0)
+                //     ++negativePoint;
                 
 
                 
@@ -176,8 +168,13 @@ function calc(){
         }
 
     }
+    
     makeMove(coordinate[0],coordinate[1]);
-
+    if(turnNo > 9){
+        console.log(turnNo);
+        stat.innerText = "Draw";
+        return;
+    }
 }
 
 
@@ -199,6 +196,9 @@ function firstTwoStep(){
         if(table[2][1] == type.X || table[2][2] == type.X || table[1][2] == type.X){
             makeMove(0,0);
         }
+        else if (table[1][1] == type.X){
+            makeMove(2,0);
+        }
         else {
             makeMove(2,2);
         }
@@ -212,6 +212,7 @@ function makeMove(x,y){
     htmlTable[y][x].innerText = char;
     table[y][x] = type[char];
     isPlayerTurn = !isPlayerTurn;
+    console.log(turnNo, x,y);
     ++turnNo;
 
 }
