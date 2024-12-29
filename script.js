@@ -55,7 +55,7 @@ function calc(){
 
     if(turnNo == 4){
 
-        if(table[0][2] == table[2][0] || table[0][0] == table[2][2]){
+        if(table[0][2] == table[2][0] && table[0][2] != 0|| table[0][0] == table[2][2] && table[0][0] != 0){
             makeMove(0,1);
             return;
         }
