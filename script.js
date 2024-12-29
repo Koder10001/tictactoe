@@ -53,14 +53,14 @@ function calc(){
         return;
     }
 
-    if(turnNo == 4){
+    // if(turnNo == 4){
 
-        if(table[0][2] == table[2][0] && table[0][2] != 0|| table[0][0] == table[2][2] && table[0][0] != 0){
-            makeMove(0,1);
-            return;
-        }
+    //     if(table[0][2] == table[2][0] && table[0][2] != 0|| table[0][0] == table[2][2] && table[0][0] != 0){
+    //         makeMove(0,1);
+    //         return;
+    //     }
 
-    }
+    // }
 
     if(turnNo >= 9){
         stat.innerText = "Draw";
@@ -140,16 +140,8 @@ function calc(){
                     return;
 
                 }
-                // else if(horizontalPoint == -2 || verticalPoint == -2 || diagonalPoint == -2){
-
-                //     makeMove(j,i,type.O);
-                //     return;
-
-                // }
                 else {
 
-                    //let sum = Math.abs(horizontalPoint) + Math.abs(verticalPoint) + Math.abs(diagonalPoint);
-                    //let sum = horizontalPoint + verticalPoint + diagonalPoint;
                     let absH = Math.abs(horizontalPoint);
                     let absV = Math.abs(verticalPoint);
                     let absB = Math.abs(backSlashPoint);
