@@ -43,7 +43,7 @@ window.onload = function(){
 
     }
 
-    stat.innerText = "You are X";
+    stat.innerText = "Oh, You are X btw";
 
 }
 
@@ -53,7 +53,7 @@ function calc(){
         return;
     }
 
-    if(turnNo == 4){
+    if(turnNo == 4){ 
 
         if(table[0][2] == table[2][0] && table[0][2] != 0|| table[0][0] == table[2][2] && table[0][0] != 0){
 

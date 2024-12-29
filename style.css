@@ -10,3 +10,27 @@
     text-align: center;
     cursor: pointer;
 }
+
+.chicken {
+    display: flex;
+
+}
+
+.chicken img {
+    margin-left: calc(100vw);
+    width: 96px;
+    height: 96px;
+    animation-iteration-count: infinite;
+    animation-name: rollin;
+    animation-duration: 7s;
+    animation-timing-function: linear;
+}
+
+@keyframes rollin {
+    0% {
+        margin-left: calc(100vw);;
+    }
+    100% {
+        margin-left: -96px;
+    }
+}
