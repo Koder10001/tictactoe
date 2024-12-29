@@ -170,6 +170,7 @@ function calc(){
 
                     let def = 0;
                     let atk = 0;
+                    let isHasTwo = false;
                     if(horizontalPoint < 0){
                         def += horizontalPoint;
                     }
@@ -198,6 +199,11 @@ function calc(){
                         atk += forwardSlashPoint;
                     }
 
+                    if(Math.min(horizontalPoint,verticalPoint,backSlashPoint,forwardSlashPoint) == -2){
+                        makeMove(j,i);
+                        return;
+                    }
+
                     if (attack <= atk){
                         attack = atk;
                         attackCoor = [j,i];
@@ -208,7 +214,7 @@ function calc(){
                         defenseCoor = [j,i];
                     }
 
-                    if(defense <= -2){
+                    if(defense <= -2 ){
                         coordinate = [... defenseCoor];
                     }
                     else {
