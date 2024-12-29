@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <label id="stat"></label>
+        <table id="table">
+            <tr>
+                <td class="square" y="0" x="1" onclick="playerMove(0, 0)"></td>
+                <td class="square" y="0" x="0" onclick="playerMove(1, 0)"></td>
+                <td class="square" y="0" x="2" onclick="playerMove(2, 0)"></td>
+            </tr>
+            <tr>
+                <td class="square" y="1" x="0" onclick="playerMove(0, 1)"></td>
+                <td class="square" y="1" x="1" onclick="playerMove(1, 1)"></td>
+                <td class="square" y="1" x="2" onclick="playerMove(2, 1)"></td>
+            </tr>
+            <tr>
+                <td class="square" y="2" x="0" onclick="playerMove(0, 2)"></td>
+                <td class="square" y="2" x="1" onclick="playerMove(1, 2)"></td>
+                <td class="square" y="2" x="2" onclick="playerMove(2, 2)"></td>
+            </tr>
+        </table>
+        <button onclick="second()">I'll go second</button>
+        <button onclick="restart()">Restart</button>
+    </body>
+    <script src="script.js"></script>
+</html>

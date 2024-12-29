@@ -1,0 +1,12 @@
+#table{
+    border: solid 1px;
+    margin: 25px;
+}
+.square {
+    width: 50px;
+    height: 50px;
+    border: solid 1px;
+    font-size: 30px;
+    text-align: center;
+    cursor: pointer;
+}
