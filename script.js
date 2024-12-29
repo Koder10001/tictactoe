@@ -52,6 +52,16 @@ function calc(){
         firstTwoStep();
         return;
     }
+
+    if(turnNo == 4){
+
+        if(table[0][2] == table[2][0] || table[0][0] == table[2][2]){
+            makeMove(0,1);
+            return;
+        }
+
+    }
+
     if(turnNo >= 9){
         stat.innerText = "Draw";
         return;
@@ -123,7 +133,7 @@ function calc(){
 
                 if(horizontalPoint == 2 || verticalPoint == 2 || diagonalPoint == 2){
 
-                    makeMove(j,i,type.O);
+                    makeMove(j,i);
                     stat.innerText = "PC won";
                     isGameEnded = true;
                     return;
@@ -138,6 +148,7 @@ function calc(){
                 else {
 
                     let sum = Math.abs(horizontalPoint) + Math.abs(verticalPoint) + Math.abs(diagonalPoint);
+                    //let sum = horizontalPoint + verticalPoint + diagonalPoint;
 
                     if(maxPoint <= sum){
                         maxPoint = sum;
@@ -164,7 +175,7 @@ function calc(){
 
     }
 
-    makeMove(coordinate[1],coordinate[0], type.O);
+    makeMove(coordinate[1],coordinate[0]);
 
 }
 
@@ -172,31 +183,32 @@ function calc(){
 function firstTwoStep(){
     if(turnNo == 2){  // go second, takes center
         if(table[1][1] == 0){
-            makeMove(1,1,type.O);
+            makeMove(1,1);
         }
         else {
-            makeMove(0,2, type.O);
+            makeMove(0,2);
 
         }
     }
 
     else if (turnNo == 1){ // go first, takes corner
-        makeMove(0,2,type.O)
+        makeMove(0,2)
     }
     else if (turnNo == 3){ // go first, second turn, takes another corner that opposite with the player
         if(table[2][1] == type.X || table[2][2] == type.X || table[1][2] == type.X){
-            makeMove(0,0, type.O);
+            makeMove(0,0);
         }
         else {
-            makeMove(2,2, type.O);
+            makeMove(2,2);
         }
     }
 }
 
 
-function makeMove(x,y,char){
-    htmlTable[y][x].innerText = isPlayerTurn?"X":"O";
-    table[y][x] = char;
+function makeMove(x,y){
+    let char = isPlayerTurn?"X":"O";
+    htmlTable[y][x].innerText = char;
+    table[y][x] = type[char];
     isPlayerTurn = !isPlayerTurn;
     ++turnNo;
 
@@ -212,7 +224,7 @@ function second(){
 
 function playerMove(x, y){
     if(isPlayerTurn && table[y][x] == 0 && !isGameEnded){
-        makeMove(x, y, type.X);
+        makeMove(x, y);
         calc();
     }
 }
