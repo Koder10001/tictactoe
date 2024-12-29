@@ -176,7 +176,7 @@ function firstTwoStep(){
         }
         else {
             makeMove(0,2, type.O);
-            
+
         }
     }
 
@@ -195,7 +195,6 @@ function firstTwoStep(){
 
 
 function makeMove(x,y,char){
-    console.log(x,y,isPlayerTurn);
     htmlTable[y][x].innerText = isPlayerTurn?"X":"O";
     table[y][x] = char;
     isPlayerTurn = !isPlayerTurn;
@@ -212,7 +211,7 @@ function second(){
 }
 
 function playerMove(x, y){
-    if(isPlayerTurn && table[y][x] == 0 || !isGameEnded){
+    if(isPlayerTurn && table[y][x] == 0 && !isGameEnded){
         makeMove(x, y, type.X);
         calc();
     }
