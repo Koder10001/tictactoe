@@ -67,7 +67,7 @@ function calc(){
         return;
     }
 
-    let coordinate, isNegative = true, priorities = 0; // priorities 0 < -1 < 1 < -2 < 2
+    let coordinate, priorities = 0; // priorities 0 < -1 < 1 < -2 < 2
 
 
     for(let i = 0 ; i < 3; i++ ){ // loop through all row
