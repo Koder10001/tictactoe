@@ -56,8 +56,10 @@ function calc(){
     if(turnNo == 4){
 
         if(table[0][2] == table[2][0] && table[0][2] != 0|| table[0][0] == table[2][2] && table[0][0] != 0){
+
             makeMove(1,0);
             return;
+
         }
 
     }
@@ -68,7 +70,7 @@ function calc(){
         return;
     }
 
-    let coordinate, priorities = 0, defense = 0, attack = 0, attackCoor, defenseCoor, defLock = false; // priorities 0 < -1 < 1 < -2 < 2
+    let coordinate, defense = 0, attack = 0, attackCoor, defenseCoor, defLock = false; // priorities 0 < -1 < 1 < -2 < 2
 
 
     for(let i = 0 ; i < 3; i++ ){ // loop through all row
@@ -121,19 +123,10 @@ function calc(){
 
                 }
 
-                // count negatives for priorities
-
-                // if(verticalPoint < 0)
-                //     ++negativePoint;
-                // if(horizontalPoint < 0)
-                //     ++negativePoint;
-                // if(verticalPoint < 0)
-                //     ++negativePoint;
-                
 
                 
-
-                if(horizontalPoint == 2 || verticalPoint == 2 || backSlashPoint == 2 || forwardSlashPoint == 2){
+                // check if is there any 2 in line and check immidiately
+                if(horizontalPoint == 2 || verticalPoint == 2 || backSlashPoint == 2 || forwardSlashPoint == 2){ 
 
                     makeMove(j,i);
                     stat.innerText = "PC won";
@@ -141,36 +134,13 @@ function calc(){
                     return;
 
                 }
-                else {
+                else { 
 
-                    // let absH = Math.abs(horizontalPoint);
-                    // let absV = Math.abs(verticalPoint);
-                    // let absB = Math.abs(backSlashPoint);
-                    // let absF = Math.abs(forwardSlashPoint);
-                    
-                    // if( absH > Math.abs(priorities) || horizontalPoint > 0 && priorities < 0 && Math.abs(priorities) == absH ){
-                    //     priorities = horizontalPoint;
-                    //     coordinate = [j,i];
-                    // }
-                    // if( absV > Math.abs(priorities) || verticalPoint > 0 && priorities < 0 && Math.abs(priorities) == absV ){
-                    //     priorities = verticalPoint;
-                    //     coordinate = [j,i];
-                    // }
-                    // if( absB > Math.abs(priorities) || backSlashPoint > 0 && priorities < 0 && Math.abs(priorities) == absB ){
-                    //     priorities = backSlashPoint;
-                    //     coordinate = [j,i];
-                        
-                    // }
-                    // if(absF > Math.abs(priorities)  || forwardSlashPoint > 0 && priorities < 0 && Math.abs(priorities) == absF ){
-                    //     priorities = forwardSlashPoint;
-                    //     coordinate = [j,i];
-                    // }
-
-                    // console.log(`at ${i} ${j}\nh = ${horizontalPoint}\nv = ${verticalPoint}\nb = ${backSlashPoint}\nf = ${forwardSlashPoint}\npri = ${priorities}`);
+                    // count def and atk point for each square
 
                     let def = 0;
                     let atk = 0;
-                    let isHasTwo = false;
+
                     if(horizontalPoint < 0){
                         def += horizontalPoint;
                     }
@@ -199,19 +169,21 @@ function calc(){
                         atk += forwardSlashPoint;
                     }
 
-                    
+                    // atk will never be 2
                     if (attack <= atk){
                         attack = atk;
                         attackCoor = [j,i];
                     }
 
+                    
                     if(def <= defense){
                         defense = def;
                         defenseCoor = [j,i];
                     }
 
-                    if(!defLock){
-                        if(defense <= -2){
+                    // incase either reach 2 or -2
+                    if( !defLock ){
+                        if( defense <= -2 ){
                             coordinate = [... defenseCoor];
                         }
                         else {
@@ -219,7 +191,7 @@ function calc(){
                         }
                     }
                     
-
+                    // if found player have 2 inline - lock it then remaining square to look for 2 'O' inline
                     if(Math.min(horizontalPoint,verticalPoint,backSlashPoint,forwardSlashPoint) == -2){
                         defLock = true;
                         coordinate = [j,i];
@@ -234,10 +206,6 @@ function calc(){
 
         }
 
-    }
-    
-    if(defLock){
-        defLock = false;
     }
 
     makeMove(coordinate[0],coordinate[1]);
