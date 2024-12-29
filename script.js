@@ -52,7 +52,16 @@ function calc(){
         firstTwoStep();
         return;
     }
-    
+
+    if(turnNo == 4){
+
+        if(table[0][2] == table[2][0] && table[0][2] != 0|| table[0][0] == table[2][2] && table[0][0] != 0){
+            makeMove(1,0);
+            return;
+        }
+
+    }
+
     if(turnNo > 9){
         console.log(turnNo);
         stat.innerText = "Draw";
