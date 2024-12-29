@@ -203,18 +203,18 @@ function calc(){
                         attackCoor = [j,i];
                     }
 
-                    if(defense <= def){
+                    if(def <= defense){
                         defense = def;
                         defenseCoor = [j,i];
                     }
 
-                    if(defense >= 2){
+                    if(defense <= -2){
                         coordinate = [... defenseCoor];
                     }
                     else {
                         coordinate = [... attackCoor];
                     }
-
+                    console.log(`at ${i} ${j}\nh = ${horizontalPoint}\nv = ${verticalPoint}\nb = ${backSlashPoint}\nf = ${forwardSlashPoint}\npri = ${priorities}\natk = ${atk}`);
 
                 }
 
