@@ -68,7 +68,7 @@ function calc(){
         return;
     }
 
-    let coordinate, priorities = 0; // priorities 0 < -1 < 1 < -2 < 2
+    let coordinate, priorities = 0, defense = 0, attack = 0, attackCoor, defenseCoor; // priorities 0 < -1 < 1 < -2 < 2
 
 
     for(let i = 0 ; i < 3; i++ ){ // loop through all row
@@ -143,30 +143,78 @@ function calc(){
                 }
                 else {
 
-                    let absH = Math.abs(horizontalPoint);
-                    let absV = Math.abs(verticalPoint);
-                    let absB = Math.abs(backSlashPoint);
-                    let absF = Math.abs(forwardSlashPoint);
+                    // let absH = Math.abs(horizontalPoint);
+                    // let absV = Math.abs(verticalPoint);
+                    // let absB = Math.abs(backSlashPoint);
+                    // let absF = Math.abs(forwardSlashPoint);
                     
-                    if( absH > Math.abs(priorities) || horizontalPoint > 0 && priorities < 0 && Math.abs(priorities) == absH ){
-                        priorities = horizontalPoint;
-                        coordinate = [j,i];
-                    }
-                    if( absV > Math.abs(priorities) || verticalPoint > 0 && priorities < 0 && Math.abs(priorities) == absV ){
-                        priorities = verticalPoint;
-                        coordinate = [j,i];
-                    }
-                    if( absB > Math.abs(priorities) || backSlashPoint > 0 && priorities < 0 && Math.abs(priorities) == absB ){
-                        priorities = backSlashPoint;
-                        coordinate = [j,i];
+                    // if( absH > Math.abs(priorities) || horizontalPoint > 0 && priorities < 0 && Math.abs(priorities) == absH ){
+                    //     priorities = horizontalPoint;
+                    //     coordinate = [j,i];
+                    // }
+                    // if( absV > Math.abs(priorities) || verticalPoint > 0 && priorities < 0 && Math.abs(priorities) == absV ){
+                    //     priorities = verticalPoint;
+                    //     coordinate = [j,i];
+                    // }
+                    // if( absB > Math.abs(priorities) || backSlashPoint > 0 && priorities < 0 && Math.abs(priorities) == absB ){
+                    //     priorities = backSlashPoint;
+                    //     coordinate = [j,i];
                         
+                    // }
+                    // if(absF > Math.abs(priorities)  || forwardSlashPoint > 0 && priorities < 0 && Math.abs(priorities) == absF ){
+                    //     priorities = forwardSlashPoint;
+                    //     coordinate = [j,i];
+                    // }
+
+                    // console.log(`at ${i} ${j}\nh = ${horizontalPoint}\nv = ${verticalPoint}\nb = ${backSlashPoint}\nf = ${forwardSlashPoint}\npri = ${priorities}`);
+
+                    let def = 0;
+                    let atk = 0;
+                    if(horizontalPoint < 0){
+                        def += horizontalPoint;
                     }
-                    if(absF > Math.abs(priorities)  || forwardSlashPoint > 0 && priorities < 0 && Math.abs(priorities) == absF ){
-                        priorities = forwardSlashPoint;
-                        coordinate = [j,i];
+                    else {
+                        atk += horizontalPoint;
                     }
 
-                    console.log(`at ${i} ${j}\nh = ${horizontalPoint}\nv = ${verticalPoint}\nb = ${backSlashPoint}\nf = ${forwardSlashPoint}\npri = ${priorities}`);
+                    if(verticalPoint < 0){
+                        def += verticalPoint;
+                    }
+                    else {
+                        atk += verticalPoint;
+                    }
+
+                    if(backSlashPoint < 0){
+                        def += backSlashPoint;
+                    }
+                    else {
+                        atk += backSlashPoint;
+                    }
+
+                    if(forwardSlashPoint < 0){
+                        def += forwardSlashPoint;
+                    }
+                    else {
+                        atk += forwardSlashPoint;
+                    }
+
+                    if (attack <= atk){
+                        attack = atk;
+                        attackCoor = [j,i];
+                    }
+
+                    if(defense <= def){
+                        defense = def;
+                        defenseCoor = [j,i];
+                    }
+
+                    if(defense >= 2){
+                        coordinate = [... defenseCoor];
+                    }
+                    else {
+                        coordinate = [... attackCoor];
+                    }
+
 
                 }
 
@@ -180,7 +228,6 @@ function calc(){
     
     makeMove(coordinate[0],coordinate[1]);
     if(turnNo > 9){
-        console.log(turnNo);
         stat.innerText = "Draw";
         return;
     }
