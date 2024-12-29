@@ -68,7 +68,7 @@ function calc(){
         return;
     }
 
-    let coordinate, priorities = 0, defense = 0, attack = 0, attackCoor, defenseCoor; // priorities 0 < -1 < 1 < -2 < 2
+    let coordinate, priorities = 0, defense = 0, attack = 0, attackCoor, defenseCoor, defLock = false; // priorities 0 < -1 < 1 < -2 < 2
 
 
     for(let i = 0 ; i < 3; i++ ){ // loop through all row
@@ -199,11 +199,7 @@ function calc(){
                         atk += forwardSlashPoint;
                     }
 
-                    if(Math.min(horizontalPoint,verticalPoint,backSlashPoint,forwardSlashPoint) == -2){
-                        makeMove(j,i);
-                        return;
-                    }
-
+                    
                     if (attack <= atk){
                         attack = atk;
                         attackCoor = [j,i];
@@ -214,13 +210,21 @@ function calc(){
                         defenseCoor = [j,i];
                     }
 
-                    if(defense <= -2 ){
-                        coordinate = [... defenseCoor];
+                    if(!defLock){
+                        if(defense <= -2){
+                            coordinate = [... defenseCoor];
+                        }
+                        else {
+                            coordinate = [... attackCoor];
+                        }
                     }
-                    else {
-                        coordinate = [... attackCoor];
+                    
+
+                    if(Math.min(horizontalPoint,verticalPoint,backSlashPoint,forwardSlashPoint) == -2){
+                        defLock = true;
+                        coordinate = [j,i];
                     }
-                    console.log(`at ${i} ${j}\nh = ${horizontalPoint}\nv = ${verticalPoint}\nb = ${backSlashPoint}\nf = ${forwardSlashPoint}\npri = ${priorities}\natk = ${atk}`);
+                    console.log(`at ${i} ${j}\nh = ${horizontalPoint}\nv = ${verticalPoint}\nb = ${backSlashPoint}\nf = ${forwardSlashPoint}\ndef = ${defense}\natk = ${attack}`);
 
                 }
 
@@ -232,6 +236,10 @@ function calc(){
 
     }
     
+    if(defLock){
+        defLock = false;
+    }
+
     makeMove(coordinate[0],coordinate[1]);
     if(turnNo > 9){
         stat.innerText = "Draw";
@@ -274,7 +282,6 @@ function makeMove(x,y){
     htmlTable[y][x].innerText = char;
     table[y][x] = type[char];
     isPlayerTurn = !isPlayerTurn;
-    console.log(turnNo, x,y);
     ++turnNo;
 
 }
