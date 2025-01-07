@@ -48,10 +48,22 @@ window.onload = function(){
 }
 
 function calc(){
-    if(turnNo <= 4){
+    if(turnNo <= 3){
         firstTwoStep();
         return;
     }
+
+
+    if(turnNo == 4){
+        if(table[0][2] == table[2][0] && table[0][2] != 0|| table[0][0] == table[2][2] && table[0][0] != 0){
+
+            makeMove(1,0);
+            return;
+    
+        }
+    }
+    
+
 
     if(turnNo > 9){
         console.log(turnNo);
@@ -59,16 +71,15 @@ function calc(){
         return;
     }
 
-    let coordinate, defense = 0, attack = 0, attackCoor, defenseCoor, defLock = false; // priorities 0 < -1 < 1 < -2 < 2
+    let coordinate, maxDefense = 0, maxAttack = 0, attackCoor, defenseCoor, defLock = false; // priorities 0 < -1 < 1 < -2 < 2
 
 
-    for(let i = 0 ; i < 3; i++ ){ // loop through all row
+    for(let y = 0 ; y < 3; y++ ){ // loop through all row
 
-        for( let j = 0; j < 3; j++ ){ // loop through all square
+        for( let x = 0; x < 3; x++ ){ // loop through all square
 
-            if( table[i][j] == 0 ){ // emply square
-                
-                console.log(i,j);
+            if( table[y][x] == 0 ){ // emply square
+            
 
                 let horizontalPoint = 0;
                 let verticalPoint = 0;
@@ -78,8 +89,8 @@ function calc(){
 
                 for(let num = 0; num < 3; num++){ // work on vertical and horizontal
 
-                    horizontalPoint += table[num][j];
-                    verticalPoint += table[i][num];
+                    horizontalPoint += table[num][x];
+                    verticalPoint += table[y][num];
 
                 }
 
@@ -95,18 +106,18 @@ function calc(){
 
                 */
 
-                if( i+j == 2 ){ // if it's one of the backslash square
+                if( x+y == 2 ){ // if it's one of the backslash square
                     
 
                     backSlashPoint = table[0][2] + table[1][1] + table[2][0];
                     
-                    if (i == j ){ // [1][1] if this is the one in the center add value from the right slash too
+                    if (x == y ){ // [1][1] if this is the one in the center add value from the right slash too
 
                         forwardSlashPoint += table[0][0] + table[1][1] + table[2][2];
 
                     }
                 }
-                else if( i + j == 0 || i + j == 4){ // if it's one of the forwardslash square
+                else if( x + y == 0 || x + y == 4){ // if it's one of the forwardslash square
 
                     forwardSlashPoint = table[0][0] + table[1][1] + table[2][2];
 
@@ -117,7 +128,7 @@ function calc(){
                 // check if is there any 2 in line and check immidiately
                 if(horizontalPoint == 2 || verticalPoint == 2 || backSlashPoint == 2 || forwardSlashPoint == 2){ 
 
-                    makeMove(j,i);
+                    makeMove(x,y);
                     stat.innerText = "PC won";
                     isGameEnded = true;
                     return;
@@ -158,21 +169,22 @@ function calc(){
                         atk += forwardSlashPoint;
                     }
 
-                    // atk will never be 2
-                    if (attack <= atk){
-                        attack = atk;
-                        attackCoor = [j,i];
+
+                    // atk will never be 2 here
+                    if (maxAttack <= atk){
+                        maxAttack = atk;
+                        attackCoor = [x,y];
                     }
 
                     
-                    if(def <= defense){
-                        defense = def;
-                        defenseCoor = [j,i];
+                    if(def <= maxDefense){
+                        maxDefense = def;
+                        defenseCoor = [x,y];
                     }
 
-                    // incase either reach 2 or -2
+
                     if( !defLock ){
-                        if( defense <= -2 ){
+                        if( maxDefense <= -2 ){
                             coordinate = [... defenseCoor];
                         }
                         else {
@@ -183,9 +195,10 @@ function calc(){
                     // if found player have 2 inline - lock it then remaining square to look for 2 'O' inline
                     if(Math.min(horizontalPoint,verticalPoint,backSlashPoint,forwardSlashPoint) == -2){
                         defLock = true;
-                        coordinate = [j,i];
+                        coordinate = [x,y];
                     }
-                    console.log(`at ${i} ${j}\nh = ${horizontalPoint}\nv = ${verticalPoint}\nb = ${backSlashPoint}\nf = ${forwardSlashPoint}\ndef = ${defense}\natk = ${attack}`);
+                    
+                    console.log(`at ${x} ${y}\nh = ${horizontalPoint}\nv = ${verticalPoint}\nb = ${backSlashPoint}\nf = ${forwardSlashPoint}\ndef = ${maxDefense}\natk = ${maxAttack}`);
 
                 }
 
@@ -206,6 +219,8 @@ function calc(){
 
 
 function firstTwoStep(){
+
+
     if(turnNo == 2){  // go second, takes center
         if(table[1][1] == 0){
             makeMove(1,1);
@@ -215,16 +230,8 @@ function firstTwoStep(){
 
         }
     }
-    else if(turnNo == 4){ 
 
-        if(table[0][2] == table[2][0] && table[0][2] != 0|| table[0][0] == table[2][2] && table[0][0] != 0){
 
-            makeMove(1,0);
-            return;
-
-        }
-
-    }
 
     else if (turnNo == 1){ // go first, takes corner
         makeMove(0,2)
