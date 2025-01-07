@@ -48,20 +48,9 @@ window.onload = function(){
 }
 
 function calc(){
-    if(turnNo <= 3){
+    if(turnNo <= 4){
         firstTwoStep();
         return;
-    }
-
-    if(turnNo == 4){ 
-
-        if(table[0][2] == table[2][0] && table[0][2] != 0|| table[0][0] == table[2][2] && table[0][0] != 0){
-
-            makeMove(1,0);
-            return;
-
-        }
-
     }
 
     if(turnNo > 9){
@@ -225,6 +214,16 @@ function firstTwoStep(){
             makeMove(0,2);
 
         }
+    }
+    else if(turnNo == 4){ 
+
+        if(table[0][2] == table[2][0] && table[0][2] != 0|| table[0][0] == table[2][2] && table[0][0] != 0){
+
+            makeMove(1,0);
+            return;
+
+        }
+
     }
 
     else if (turnNo == 1){ // go first, takes corner
